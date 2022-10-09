@@ -43,3 +43,20 @@ void generic_terminal_writer(const char* str, uint64_t length) {
 void (*get_terminal_writer())(const char*, uint64_t) {
     return generic_terminal_writer;
 }
+
+
+uint64_t get_memory_map_entries() {
+    return CALL_SERVICE(MEMMAP)->entry_count;
+}
+
+uint64_t get_memory_map_base(uint64_t entry) {
+    return CALL_SERVICE(MEMMAP)->entries[entry]->base;
+}
+
+uint64_t get_memory_map_length(uint64_t entry) {
+    return CALL_SERVICE(MEMMAP)->entries[entry]->length;
+}
+
+uint64_t get_memory_map_type(uint64_t entry) {
+    return CALL_SERVICE(MEMMAP)->entries[entry]->type;
+}

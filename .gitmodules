@@ -1,3 +1,6 @@
 [submodule "OVMFbin"]
 	path = OVMFbin
 	url = https://github.com/Absurdponcho/OVMFbin
+[submodule "printf"]
+	path = printf
+	url = https://github.com/mpaland/printf
