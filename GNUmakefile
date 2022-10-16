@@ -86,6 +86,7 @@ override CFLAGS +=       \
     -mabi=sysv           \
     -mno-80387           \
     -mno-red-zone        \
+	-g                   \
     -mcmodel=kernel      \
     -MMD
 override CFLAGS += $(CEXTRA)
@@ -279,6 +280,7 @@ debuge:
 	@echo "Building experimental ISO..."
 	@make buildimgexp
 	@echo "Running experimental QEMU..."
+	$(CMDNEWSCREEN) $(GDB) $(GDBFLAGS) &
 	$(QEMU) -S -s $(QFLAGSEXP)$(ISODIR)/$(IMG)
 
 debug:

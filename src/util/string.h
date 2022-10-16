@@ -4,4 +4,5 @@
 #include <stdint.h>
 
 uint64_t strlen(const char* str);
+void memset(void * ptr, char chr, uint64_t size);
 #endif

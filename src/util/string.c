@@ -6,3 +6,9 @@ uint64_t strlen(const char* str) {
         len++;
     return len;
 }
+
+void memset(void * ptr, char chr, uint64_t size) {
+    for (uint64_t i = 0; i < size; i++) {
+        ((char*)ptr)[i] = chr;
+    }
+}

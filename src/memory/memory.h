@@ -19,5 +19,6 @@ struct uefi_memory_region {
 };
 
 void init_memory();
-
+void free_page(void* addr);
+void * request_page();
 #endif
