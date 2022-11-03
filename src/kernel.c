@@ -2,6 +2,7 @@
 #include "bootloader/bootservices.h"
 #include "util/string.h"
 #include "memory/memory.h"
+#include "io/interrupts.h"
 #include <stdint.h>
 
 void hlt() {
@@ -15,14 +16,10 @@ void _start() {
     );
     
     init_memory();
+    init_interrupts();
 
-    void * page1 = request_page();
-    printf("Page 1: %p\n", page1);
-    void * page2 = request_page();
-    printf("Page 2: %p\n", page2);
-    free_page(page2);
-    void * page3 = request_page();
-    printf("Page 3: %p\n", page3);
+    uint64_t * badptr = (uint64_t*)0xffffffffdeadb000;
+    *badptr = 0xdeadbeef;
 
     printf("Kernel looping\n");
     hlt();
