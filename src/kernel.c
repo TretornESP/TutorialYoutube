@@ -3,6 +3,7 @@
 #include "util/string.h"
 #include "memory/memory.h"
 #include "io/interrupts.h"
+#include "memory/paging.h"
 #include <stdint.h>
 
 void hlt() {
@@ -17,9 +18,23 @@ void _start() {
     
     init_memory();
     init_interrupts();
+    init_paging();
 
-    uint64_t * badptr = (uint64_t*)0xffffffffdeadb000;
-    *badptr = 0xdeadbeef;
+    void * ptr = request_page();
+    memset(ptr, 0x5, 0x1000);
+
+    map_memory((void*)0xffffffffdeadb000, ptr);
+    map_memory((void*)0xffffffffcafeb000, ptr);
+
+    uint64_t* ptr1 = (uint64_t*)0xffffffffdeadb000;
+    uint64_t* ptr2 = (uint64_t*)0xffffffffcafeb000;
+
+    mprotect((void*)ptr2, 0x1000, 0x0);
+
+    printf("%llx\n", *ptr1);
+    memset((void*)ptr1, 0x6, 0x1000);
+    printf("%llx\n", *ptr1);
+
 
     printf("Kernel looping\n");
     hlt();

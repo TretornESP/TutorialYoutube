@@ -60,3 +60,11 @@ uint64_t get_memory_map_length(uint64_t entry) {
 uint64_t get_memory_map_type(uint64_t entry) {
     return CALL_SERVICE(MEMMAP)->entries[entry]->type;
 }
+
+uint64_t get_kernel_address_physical() {
+    return CALL_SERVICE(KERNEL)->physical_base;
+}
+
+uint64_t get_kernel_address_virtual() {
+    return CALL_SERVICE(KERNEL)->virtual_base;
+}
