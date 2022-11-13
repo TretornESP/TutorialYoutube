@@ -3,6 +3,7 @@
 #include "../../util/string.h"
 #include "../../print/dbgprinter.h"
 #include "../../bootloader/bootservices.h"
+#include "../pci/pci.h"
 
 uint8_t acpi_sdt_checksum(struct acpi_sdt_header * table_header) {
     uint8_t sum = 0;
@@ -129,6 +130,6 @@ void init_acpi() {
         mcfg_header->header.oem_revision, mcfg_header->header.creator_id, mcfg_header->header.creator_revision
     );
 
-    //enumerate_pci(mcfg_header);
+    enumerate_pci(mcfg_header);
 
 }
