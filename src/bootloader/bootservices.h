@@ -17,6 +17,8 @@ uint64_t get_memory_map_type(uint64_t entry);
 uint64_t get_kernel_address_physical();
 uint64_t get_kernel_address_virtual();
 
+uint64_t get_rsdp_address();
+
 void set_terminal_writer(uint64_t terminal);
 void (*get_terminal_writer())(const char*, uint64_t);
 #endif

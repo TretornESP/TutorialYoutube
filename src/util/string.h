@@ -5,4 +5,7 @@
 
 uint64_t strlen(const char* str);
 void memset(void * ptr, char chr, uint64_t size);
+void strncpy(char * dest, const char* src, uint64_t size);
+void memcpy(void * dest, const void* src, uint64_t size);
+uint64_t memcmp(const void * dest, const void * src, uint64_t size);
 #endif
