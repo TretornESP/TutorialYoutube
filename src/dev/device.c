@@ -3,6 +3,7 @@
 #include "../print/printf/printf.h"
 #include "../memory/memory.h"
 #include "../util/string.h"
+#include "../drivers/ahci/ahci.h"
 
 
 struct device_driver char_device_drivers[256] = {0};
@@ -279,9 +280,26 @@ void register_device(struct pci_device_header * pci) {
                 case 0x06: {
                     switch (pci->prog_if) {
                         case 0x01: {
-                            //init_ahci();
-                            // Register device
-                            printf("Aqui registrariamos el dispositivo ahci\n");
+                            init_ahci(pci);
+                            for (int i = 0; i < get_port_count(); i++) {
+                                switch(get_port_type(i)) {
+                                    case PORT_TYPE_SATA:
+                                        insert_device(0x8, pci, "/dev/hd", i);
+                                        break;
+                                    case PORT_TYPE_SATAPI:
+                                        insert_device(0x9, pci, "/dev/cd", i);
+                                        break;
+                                    case PORT_TYPE_SEMB:
+                                        insert_device(0xa, pci, "/dev/semb", i);
+                                        break;
+                                    case PORT_TYPE_PM:
+                                        insert_device(0xb, pci, "/dev/pm", i);
+                                        break;
+                                    case PORT_TYPE_NONE:
+                                        insert_device(0xc, pci, "/dev/unknown", i);
+                                        break;
+                                }
+                            }
                             break;
                         }
                     }

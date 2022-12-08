@@ -5,6 +5,7 @@
 #include "io/interrupts.h"
 #include "memory/paging.h"
 #include "dev/device.h"
+#include "drivers/disk/disk.h"
 #include <stdint.h>
 
 void hlt() {
@@ -21,8 +22,16 @@ void _start() {
     init_interrupts();
     init_paging();
     init_devices();
+    init_drive();
 
     device_list();
+    
+    uint8_t * buffer = request_page();
+    device_read("/dev/hda", 2, 0, buffer);
+    for (int i = 0; i < 0x100; i++) {
+        printf("%c", buffer[i]);
+        if ((i % 20) == 0) printf("\n");
+    }
 
     printf("Kernel looping\n");
     hlt();
